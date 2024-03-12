@@ -1,0 +1,42 @@
+{
+  "catalog": {
+    "available": {
+      "name": "Expresso Gelado",
+      "price": "9,99",
+      "delivery": "10,00",
+      "total": "19,99"
+    },
+    "unavailable": {
+      "name": "Expresso Cremoso"
+    }
+  },
+  "checkout":{
+    "name": "Expresso Tradicional",
+    "zipcode": "70040010",
+    "number": 100,
+    "complement": "apt 22",
+    "payment": "Cartão de Débito"
+  },
+  "coupon": {
+    "success":{ 
+      "code": "MEUCAFE",
+      "discount": "1,99",
+      "new_total": "17,99"
+    },
+    "fail": {
+      "expired": {
+        "code": "PROMO20",
+        "alert": "Cupom expirado!"
+      },
+      "invalid": {
+        "code": "PROMO100",
+        "alert": "Cupom inválido!"
+      }
+    },
+    "product": {
+        "name": "Expresso Tradicional",
+        "price": "9,99",
+        "total": "19,99"
+    }
+  }
+}

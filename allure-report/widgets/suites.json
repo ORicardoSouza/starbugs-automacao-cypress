@@ -1,0 +1,1 @@
+{"total":2,"items":[{"uid":"fe509c0aa7a8ba86e4311f1586725070","name":"cypress/e2e/catalog.cy.js","statistic":{"failed":0,"broken":1,"skipped":0,"passed":0,"unknown":0,"total":1}},{"uid":"3f950b5e52be3d6f973bdc5bcb15bd19","name":"cypress/e2e/checkout.cy.js","statistic":{"failed":0,"broken":1,"skipped":0,"passed":0,"unknown":0,"total":1}}]}
