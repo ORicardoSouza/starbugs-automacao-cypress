@@ -1,8 +1,4 @@
-Cypress.Commands.add('buyCoffee', (product) => {
-  const coffeeItem = cy.get('h1').contains(product).parent()
-  const button = coffeeItem.find('button.buy-coffee')
-  button.click()
-})
+/// <reference types="cypress"/>
 
 Cypress.Commands.add('selectProduct', (nomeProduct) => {
   cy.contains(`${nomeProduct}`)
@@ -45,17 +41,20 @@ Cypress.Commands.add('selectPaymentType', (type) => {
   }
 })
 
-Cypress.Commands.add('applyCoupon', (coupon) => {
-  cy.findByPlaceholderText('Código do cupom').type(coupon);
-  cy.get('.button-coupon').click();
-})
-
-Cypress.Commands.add('confirmOrder', () => {
+Cypress.Commands.add('confirmOrder', (selectPaymentType) => {
   cy.get('.sc-idXgbr').click()
   cy.contains(`h1`, `Uhull! Pedido confirmado`).should('be.visible')
-  cy.get('.sc-lllmON .sc-ipEyDJ')
-    .should('contain', 'Previsão de entrega')
+  cy.get('.sc-lllmON .sc-ipEyDJ').should('contain', 'Previsão de entrega')
     .and('contain', '20 min - 30 min')
     .and('contain', 'Pagamento na entrega')
-    .and('contain', 'À vista no Pix');
+    .and('contain', `${selectPaymentType}`).debug()
+});
+
+
+Cypress.Commands.add('deliveryAddressRequire', () => { 
+  cy.get('.sc-idXgbr').click()
+  cy.contains('p','Informe um CEP válido').should('exist')
+  cy.contains('p','Informe o número').should('exist')
+  cy.contains('p','Informe o método de pagamento').should('exist')
+
 });
