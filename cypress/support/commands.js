@@ -1,6 +1,9 @@
 /// <reference types="cypress"/>
+import { epic, attachment, parameter } from "allure-cypress";
+
 
 Cypress.Commands.add('selectProduct', (nomeProduct) => {
+  cy.step(`Selecionando produto ${nomeProduct}`)
   cy.contains(`${nomeProduct}`)
     .parents('.coffee-item')
     .find('.buy-coffee')
@@ -8,6 +11,7 @@ Cypress.Commands.add('selectProduct', (nomeProduct) => {
 });
 
 Cypress.Commands.add('deliveryAddress', () => {
+  cy.step(`Inserindo dados de Endereço para entrega`)
   const street = `Rua Ginaldo Willis Galdino`
   const district = `Jardim Antártica`
   const city = `São Paulo`
@@ -26,6 +30,7 @@ Cypress.Commands.add('deliveryAddress', () => {
 });
 
 Cypress.Commands.add('selectPaymentType', (type) => {
+  cy.step(`Selecionado Tipo de pagamento ${type}`)
   switch (type) {
     case 'Cartão de Crédito':
       cy.get('label[for=credit]').click();
@@ -42,6 +47,7 @@ Cypress.Commands.add('selectPaymentType', (type) => {
 })
 
 Cypress.Commands.add('confirmOrder', (selectPaymentType) => {
+  cy.step(`Confirmando dados do Pedido`)
   cy.get('.sc-idXgbr').click()
   cy.contains(`h1`, `Uhull! Pedido confirmado`).should('be.visible')
   cy.get('.sc-lllmON .sc-ipEyDJ').should('contain', 'Previsão de entrega')
@@ -51,10 +57,9 @@ Cypress.Commands.add('confirmOrder', (selectPaymentType) => {
 });
 
 
-Cypress.Commands.add('deliveryAddressRequire', () => { 
+Cypress.Commands.add('deliveryAddressRequire', () => {
   cy.get('.sc-idXgbr').click()
   cy.contains('p','Informe um CEP válido').should('exist')
   cy.contains('p','Informe o número').should('exist')
   cy.contains('p','Informe o método de pagamento').should('exist')
-
 });
