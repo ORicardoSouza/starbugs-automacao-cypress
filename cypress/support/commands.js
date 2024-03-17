@@ -1,5 +1,5 @@
 /// <reference types="cypress"/>
-import { epic, attachment, parameter } from "allure-cypress";
+import * as allure from "allure-cypress";
 
 
 Cypress.Commands.add('selectProduct', (nomeProduct) => {
@@ -11,7 +11,9 @@ Cypress.Commands.add('selectProduct', (nomeProduct) => {
 });
 
 Cypress.Commands.add('deliveryAddress', () => {
+  allure.feature('Dados de Enedereço')
   cy.step(`Inserindo dados de Endereço para entrega`)
+  cy.url().should('include','app/checkout')
   const street = `Rua Ginaldo Willis Galdino`
   const district = `Jardim Antártica`
   const city = `São Paulo`
@@ -30,6 +32,7 @@ Cypress.Commands.add('deliveryAddress', () => {
 });
 
 Cypress.Commands.add('selectPaymentType', (type) => {
+  allure.feature('Tipos De Pagamento')
   cy.step(`Selecionado Tipo de pagamento ${type}`)
   switch (type) {
     case 'Cartão de Crédito':
@@ -46,20 +49,28 @@ Cypress.Commands.add('selectPaymentType', (type) => {
   }
 })
 
-Cypress.Commands.add('confirmOrder', (selectPaymentType) => {
-  cy.step(`Confirmando dados do Pedido`)
+Cypress.Commands.add('placeOrder', () => {
+  //https://starbugs-qa.vercel.app/order-success
+  cy.step(`Confirmando Pedido`)
   cy.get('.sc-idXgbr').click()
+  cy.url().should('include',`/order-success`)
+});
+
+
+Cypress.Commands.add('confirmOrder', (selectPaymentType) => {
+  cy.placeOrder()
+  cy.step(`Confirmando dados do Pedido`)
   cy.contains(`h1`, `Uhull! Pedido confirmado`).should('be.visible')
   cy.get('.sc-lllmON .sc-ipEyDJ').should('contain', 'Previsão de entrega')
     .and('contain', '20 min - 30 min')
     .and('contain', 'Pagamento na entrega')
-    .and('contain', `${selectPaymentType}`).debug()
+    .and('contain', `${selectPaymentType}`)
 });
 
 
 Cypress.Commands.add('deliveryAddressRequire', () => {
   cy.get('.sc-idXgbr').click()
-  cy.contains('p','Informe um CEP válido').should('exist')
-  cy.contains('p','Informe o número').should('exist')
-  cy.contains('p','Informe o método de pagamento').should('exist')
+  cy.contains('p', 'Informe um CEP válido').should('exist')
+  cy.contains('p', 'Informe o número').should('exist')
+  cy.contains('p', 'Informe o método de pagamento').should('exist')
 });

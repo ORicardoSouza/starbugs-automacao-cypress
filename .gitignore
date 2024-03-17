@@ -1,6 +1,7 @@
 .vs
 .vscode
-cypress/fixtures
+allure-results
+allure-report
 cypress/videos
 cypress/screenshots
 node_modules
